@@ -1,0 +1,43 @@
+// SPDX-License-Identifier: MIT
+pragma solidity 0.8.28;
+
+import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
+import {Ownable2Step} from "@openzeppelin/contracts/access/Ownable2Step.sol";
+
+/**
+ * @title Avivien42
+ * @notice BEP-20 token for the 42 School "Tokenizer" project. The reasoning behind every
+ *         decision made here is documented in README.md.
+ * @dev The supply is fixed: it is minted once in the constructor and no mint function
+ *      exists, so no address can ever create another token. There is no onlyOwner
+ *      function either - the owner role exists only as the BEP-20 getOwner() label.
+ */
+contract AidarFteganChain42Test is ERC20, Ownable2Step {
+    /// @notice The complete supply, minted once at deployment: 1,000 tokens.
+    /// @dev A constant is inlined into the bytecode, so this number can never change.
+    uint256 public constant TOTAL_SUPPLY = 1_000 * 10 ** 18;
+
+    /// @param initialOwner Receives the whole supply and the owner role. Explicit rather
+    ///        than msg.sender, so the key paying for the deployment and the owner do not
+    ///        have to be the same account.
+    constructor(address initialOwner) ERC20("AidarFteganChain42Test", "AFCT42") Ownable(initialOwner) {
+        _mint(initialOwner, TOTAL_SUPPLY);
+    }
+
+    /// @notice Permanently destroys `value` tokens from the caller's own balance.
+    /// @dev The burner is msg.sender, so no allowance and no third account is involved.
+    ///      OpenZeppelin's ERC20Burnable is deliberately not used: it would also add
+    ///      burnFrom(), which this token has no use for.
+    /// @param value Amount to destroy, in the smallest unit.
+    function burn(uint256 value) external {
+        _burn(_msgSender(), value);
+    }
+
+    /// @notice The account that issued this token, as required by the BEP-20 spec.
+    /// @dev Same value as Ownable's owner(). The role carries no privileges.
+    /// @return The current owner of the contract.
+    function getOwner() external view returns (address) {
+        return owner();
+    }
+}

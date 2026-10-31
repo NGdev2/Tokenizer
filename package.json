@@ -1,0 +1,29 @@
+{
+  "name": "tokenizer",
+  "version": "1.0.0",
+  "description": "For Token I choosed my name, nickname and school 42 abbreviature.",
+  "main": "hardhat.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NGdev2/Tokenizer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NGdev2/Tokenizer/issues"
+  },
+  "homepage": "https://github.com/NGdev2/Tokenizer#readme",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-ignition": "^3.1.9",
+    "@nomicfoundation/hardhat-keystore": "^3.1.2",
+    "hardhat": "^3.21.2"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.6.1"
+  },
+  "type": "module"
+}
