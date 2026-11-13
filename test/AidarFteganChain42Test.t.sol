@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.28;
+pragma solidity 0.8.20;
 
 import {AidarFteganChain42Test} from "../code/test.sol";
 import {console} from "hardhat/console.sol";
@@ -25,7 +25,7 @@ contract TokenTest {
     address alice = address(0xB0B);
     address bob = address(0xCAFE);
 
-    uint256 constant SUPPLY = 1_000 * 10 ** 18;
+    uint256 constant SUPPLY = 4_242 * 10 ** 18;
 
     // Same signatures as the events ERC20 requires, so the tests can emit the expected ones.
     event Transfer(address indexed from, address indexed to, uint256 value);

@@ -4,7 +4,7 @@ import hardhatKeystore from "@nomicfoundation/hardhat-keystore";
 
 export default defineConfig({
   plugins: [hardhatIgnition, hardhatKeystore],
-  solidity: "0.8.28",
+  solidity: "0.8.20",
   paths: {
     sources: "./code",
     ignition: "./deployment",
