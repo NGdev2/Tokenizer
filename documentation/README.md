@@ -1,14 +1,13 @@
 # Installation Process
 **OpenZeppelin** is a company and publisher of open-source smart contracts.
 
-Using **OpenZeppelin** as auditing tool that helps to have standard ERC-20 code thanks to their provided standard functions. 
+I use **OpenZeppelin** Contracts, a library of audited smart contracts. It implements code of the standard ERC-20 exactly thanks to their provided standard functions. 
 
-Sepolia is a 
+Sepolia is an Ethereum testnet: a separate blockchain that works like Ethereum mainnet, but its ETH has no value. Developers use it to test contracts before deploying them to mainnet. It is run by a limited set of validators (mostly Ethereum client and testing teams), so test ETH can't be earned by users; you get it for free from faucets. Faucets limit how much you can take (for example once per day) to stop bots from draining them.
 
+_mint in the constructor initializes the whole supply once. It calls _update, , which raises totalSupply from 0 to TOTAL_SUPPLY( my constant) and emits Transfer to raise the balance owner fro zero to all tokens.  There is no mint function after deployment, so no more tokens can ever be created after.
 
-_mint in the constructor initializes the wallet and, using _update, changes the value from 0 to TOTAL_SUPPLY - my constant. It can be any value. It regulates the total amount of tokens for this contract.
-
-The burn function destroys tokens of your wallet and the TOTAL_SUPPLY. So you don't just decline ownership of tokens, you make the tokens lost forever (in code you literally transfer them to the zero address, kind of the black hole of all numbers). Burn can be used to make other tokens more valuable.
+The burn function destroys tokens of your wallet and the _totalSupply. So you don't just decline ownership of tokens, you make the tokens lost forever (in code you literally transfer them to the zero address, kind of the black hole of all numbers). Burn can be used to make other tokens more valuable.
 
 Using @title, @notice, @dev is not required, but it provides metadata for the contract. Useful for having self explaining contract documentation.
 It works by NatSpec (Ethereum Natural Language Specification).
@@ -16,8 +15,8 @@ It works by NatSpec (Ethereum Natural Language Specification).
 - @title is visible to everyone and provides the name of the contract.
 - @notice is for users. 
 - @dev is for developers. Explains how the contract works.
-- @param / @return for users and devs. Describes each logical point of the contract.<br>
-Documentation will be visible in Etherscan.
+- @param describes a function's input, @return describes what it returns. Both are for users and devs.<br>
+Documentation will be visible in Etherscan after the contract is verified.
 
 Hardhat is a development toolbox that compiles the contract, runs tests, connects to the blockchain and deploys it to networks like Sepolia. 
 
@@ -28,7 +27,9 @@ Ignition is Hardhat's deployment plugin that is responsible for deploying the co
 
 
 ## Deployment
-Creating and launching the contract, we will get the chain id for ***Ethereum Sepolia testnet***, and the folder with this chain id will be created automatically in the folder `deployment/deployments/...`
+Creating and launching the contract, Ignition gets id for contract (***Ethereum Sepolia testnet*** id is 11155111), and the folder with this chain id will be created automatically in the folder `deployment/deployments/<deployment id>/`
+By default the deployment id is chain-<chain id> (so chain-11155111); with --deployment-id final-v1 the folder is deployment/deployments/final-v1/.
+
 
 Inside we will have ***deployed_addresses.json*** that contains the contract address. Example after test run: `0x970B8D7885E0B587E8373Ed114ab8EB762905B7e` 
 and by it we can get the full address of our token in Etherscan by adding the contract address to:
@@ -40,8 +41,8 @@ and by it we can get the full address of our token in Etherscan by adding the co
 
 
 ## Functions used
-- Ownable2Step - ownership must be accepted. Transferring ownership of * can't be given by mistake to a nonexistent address.
-- burn() - destroy your own tokens. for security reasons I don't use burnFrom() that can destroy tokens from wallet of another person.
+- Ownable2Step -  ownership of the contract (the owner role, not the tokens) must be accepted by the new owner. Transferring ownership can't be given by mistake to a wrong  address.
+- burn() - destroys your own tokens. I don't use burnFrom(): it lets an approved spender burn tokens from another wallet, using the same allowance as transferFrom. This token has no use case for it, so I keep the contract smaller
 - getOwner() -  
 
 
