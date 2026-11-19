@@ -1,10 +1,10 @@
 {
   "name": "tokenizer",
   "version": "1.0.0",
-  "description": "For Token I choosed my name, nickname and school 42 abbreviature.",
+  "description": "ERC-20 token AidarFteganChain42 (AFC42) for the 42 School Tokenizer project.",
   "main": "hardhat.config.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "hardhat test"
   },
   "repository": {
     "type": "git",
@@ -12,14 +12,16 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/NGdev2/Tokenizer/issues"
   },
   "homepage": "https://github.com/NGdev2/Tokenizer#readme",
   "devDependencies": {
+    "@nomicfoundation/hardhat-ethers": "^4.2.2",
     "@nomicfoundation/hardhat-ignition": "^3.1.9",
     "@nomicfoundation/hardhat-keystore": "^3.1.2",
+    "ethers": "^6.17.0",
     "hardhat": "^3.21.2"
   },
   "dependencies": {

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.20;
 
-import {AidarFteganChain42Test} from "../code/test.sol";
+import {AidarFteganChain42} from "../code/AidarFteganChain42.sol";
 import {console} from "hardhat/console.sol";
 
 /// @dev The test runner's cheatcodes, reached through this fixed address. Only the
@@ -20,7 +20,7 @@ interface Vm {
 contract TokenTest {
     Vm constant vm = Vm(address(uint160(uint256(keccak256("hevm cheat code")))));
 
-    AidarFteganChain42Test token;
+    AidarFteganChain42 token;
     address owner = address(0xA11CE);
     address alice = address(0xB0B);
     address bob = address(0xCAFE);
@@ -32,7 +32,7 @@ contract TokenTest {
     event Approval(address indexed owner, address indexed spender, uint256 value);
 
     function setUp() public {
-        token = new AidarFteganChain42Test(owner);
+        token = new AidarFteganChain42(owner);
     }
 
     function test_Metadata() public view {
@@ -40,8 +40,8 @@ contract TokenTest {
         console.log("symbol:  ", token.symbol());
         console.log("decimals:", token.decimals());
 
-        require(keccak256(bytes(token.name())) == keccak256("AidarFteganChain42Test"), "name");
-        require(keccak256(bytes(token.symbol())) == keccak256("AFCT42"), "symbol");
+        require(keccak256(bytes(token.name())) == keccak256("AidarFteganChain42"), "name");
+        require(keccak256(bytes(token.symbol())) == keccak256("AFC42"), "symbol");
         require(token.decimals() == 18, "decimals");
     }
 
@@ -143,7 +143,7 @@ contract TokenTest {
         console.log("expect Transfer(address(0), owner, SUPPLY) on deployment");
         vm.expectEmit(); // the next event must match the one emitted right after
         emit Transfer(address(0), owner, SUPPLY);
-        new AidarFteganChain42Test(owner);
+        new AidarFteganChain42(owner);
         console.log("event matched");
     }
 

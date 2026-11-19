@@ -1,9 +1,10 @@
 import { configVariable, defineConfig } from "hardhat/config";
+import hardhatEthers from "@nomicfoundation/hardhat-ethers";
 import hardhatIgnition from "@nomicfoundation/hardhat-ignition";
 import hardhatKeystore from "@nomicfoundation/hardhat-keystore";
 
 export default defineConfig({
-  plugins: [hardhatIgnition, hardhatKeystore],
+  plugins: [hardhatEthers, hardhatIgnition, hardhatKeystore],
   solidity: "0.8.20",
   paths: {
     sources: "./code",
@@ -18,6 +19,12 @@ export default defineConfig({
       url: "https://ethereum-sepolia-rpc.publicnode.com",
       chainId: 11155111,
       accounts: [configVariable("SEPOLIA_PRIVATE_KEY")],
+    },
+  },
+  // Etherscan verification. The API key is read the same way as the private key.
+  verify: {
+    etherscan: {
+      apiKey: configVariable("ETHERSCAN_API_KEY"),
     },
   },
 });
