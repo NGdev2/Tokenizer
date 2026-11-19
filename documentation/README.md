@@ -11,7 +11,7 @@ I use **OpenZeppelin** Contracts, a library of audited smart contracts. It imple
 
 **Sepolia** is an Ethereum testnet: a separate blockchain that works like Ethereum mainnet, but its ETH has no value. Developers use it to test contracts before deploying them to mainnet. It is run by a limited set of validators (mostly Ethereum client and testing teams), so test ETH can't be earned by users; you get it for free from faucets. Faucets limit how much you can take (for example once per day) to stop bots from draining them.
 
-_mint in the constructor initializes the whole supply once. It calls _update, , which raises totalSupply from 0 to TOTAL_SUPPLY( my constant) and emits Transfer to raise the balance owner fro zero to all tokens.  There is no mint function after deployment, so no more tokens can ever be created after.
+_mint in the constructor initializes the whole supply once. It calls _update, which raises totalSupply from 0 to TOTAL_SUPPLY( my constant) and emits Transfer to raise the balance owner from zero to all tokens.  There is no mint function after deployment, so no more tokens can ever be created after.
 
 The burn function destroys tokens of your wallet and the _totalSupply. So you don't just decline ownership of tokens, you make the tokens lost forever (in code you literally transfer them to the zero address, kind of the black hole of all numbers). Burn can be used to make other tokens more valuable.
 
@@ -35,13 +35,13 @@ Creating and launching the contract, Ignition gets id for contract (***Ethereum 
 By default the deployment id is chain-<chain id> (so chain-11155111); with --deployment-id final-v1 the folder is deployment/deployments/final-v1/.
 
 
-Inside we will have ***deployed_addresses.json*** that contains the contract address. Example after test run: `0x970B8D7885E0B587E8373Ed114ab8EB762905B7e` 
+Inside we will have ***deployed_addresses.json*** that contains the contract address. Example: `0x88a1EB33b6D6b80fc6A15E534b3f37147AF06Af0` 
 and by it we can get the full address of our token in Etherscan by adding the contract address to:
 `https://sepolia.etherscan.io/address/`
 
 - Network: Ethereum Sepolia testnet (chain id 11155111)
-- Contract address: `0x970B8D7885E0B587E8373Ed114ab8EB762905B7e`
-- Etherscan: https://sepolia.etherscan.io/address/0x970B8D7885E0B587E8373Ed114ab8EB762905B7e
+- Contract address: `0x88a1EB33b6D6b80fc6A15E534b3f37147AF06Af0`
+- Etherscan: https://sepolia.etherscan.io/address/0x88a1EB33b6D6b80fc6A15E534b3f37147AF06Af0
 
 
 ## Functions used
@@ -81,7 +81,7 @@ It doesn't change the execution of smart contract.
 Block - Group of transactions and associated blockchain data
 Token - Digital asset managed by a smart contract
 
-4242 tokens are multiplied by 10 ** 18 because RC-20 uses integer arithmetic. It doesn't directly store decimal numbers.
+4242 tokens are multiplied by 10 ** 18 because ERC-20 uses integer arithmetic. It doesn't directly store decimal numbers.
 
 A block is essentially a container holding:
 - A collection of transactions.
@@ -94,3 +94,4 @@ A block is essentially a container holding:
 - https://eips.ethereum.org/EIPS/eip-20
 - https://www.thebitcoinpaper.org/white-paper/
 - https://www.reddit.com/r/ethereum/comments/3n8fkn/lets_talk_about_the_coin_standard
+- https://etherscan.io/
