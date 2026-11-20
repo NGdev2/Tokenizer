@@ -1,10 +1,15 @@
-# Tokenizer
+# AidarFteganChain42 - my ERC-20 token on Ethereum
 
-For the token name I chose my name, nickname and the School 42 abbreviation.
+I built this project to learn how a smart contract goes from code to a public network: writing it, testing it, deploying it and publishing its verified source code. I chose an ERC-20 token because it is the most widely used contract standard, so everything I learned applies to real projects.
 
-```
-AidarFteganChain42
-```
+## What I learned
+
+- **Blockchain basics.** How blockchains, blocks and nodes work, what a smart contract is, and how to build on OpenZeppelin's audited contracts instead of writing everything from scratch.
+- **Setting up a toolchain.** Hardhat 3 needs Node.js 22, my system had Node 18. I installed nvm to switch versions instead of fighting install errors. I also learned not to run `npm audit fix --force` blindly: it downgraded my framework to an old major version and brought more vulnerabilities, not fewer.
+- **Testing before deploying.** I wrote 17 automated tests: normal use, actions that must fail (overspending, sending to the zero address, a stranger taking ownership) and the events other apps rely on. A deployed contract can't be changed, so tests are the only safety net.
+- **Deployment as code.** The deployment is a script (Hardhat Ignition module), and every deployment is recorded in the repository with its address and transactions, so it is reproducible and traceable.
+- **Verifying the contract.** I verified the source code on Etherscan and Blockscout.
+- **Working with networks.** Testnet vs mainnet, RPC endpoints, chain ids, and paying transaction fees (gas) with test ETH from a faucet.
 
 ## Overview
 
@@ -21,7 +26,7 @@ AidarFteganChain42
 
 ## ERC-20 standard
 
-*We must respect the ERC20 for ETH (or BEP-20 for BSC)*
+My token follows the ERC-20 standard. It also has `getOwner()`, so the same code works as a BEP-20 token on BNB Smart Chain.
 
 ### Mandatory Functions
 
@@ -50,8 +55,8 @@ The standard requires two events to be emitted during actions so external apps a
 ## Deployment
 
 - Network: Ethereum Sepolia testnet (chain id 11155111)
-- Contract address: `0x88a1EB33b6D6b80fc6A15E534b3f37147AF06Af0`
-- Etherscan: https://sepolia.etherscan.io/address/0x88a1EB33b6D6b80fc6A15E534b3f37147AF06Af0
+- Contract address: `0x3D28630D5E38f7F3da4783A8867f12121777D9c6`
+- Etherscan: https://sepolia.etherscan.io/address/0x3D28630D5E38f7F3da4783A8867f12121777D9c6
 
 > <sub>**Faucet** - a website that gives free test ETH to pay gas on Sepolia. Faucets limit how much you get (for example once a day, or only if your address holds a little real ETH on mainnet) to stop bots from draining them. Example: Google Cloud Web3 faucet.</sub>
 
@@ -64,11 +69,12 @@ The standard requires two events to be emitted during actions so external apps a
 
 ```
 code/               the token contract (AidarFteganChain42.sol)
-test/               Solidity tests
+test/               17 Solidity tests (details in documentation/)
 deployment/         Ignition deploy module (modules/) and deployment records (deployments/)
 documentation/      theory and notes on the concepts used
-examples/           old OpenZeppelin ERC20 (Solidity 0.4.24), for study only, not compiled
+examples/           early OpenZeppelin ERC20 (2018), kept for learning, not compiled
 hardhat.config.js   compiler version, folders, Sepolia network, Etherscan verification
+env.example         names of the secrets the project needs (values go in .env)
 ```
 
 ## How to run
@@ -104,7 +110,7 @@ set -a && source .env && set +a
 npx hardhat ignition deploy deployment/modules/AidarFteganChain42.js --network sepolia --deployment-id <id>
 ```
 
-`--deployment-id` names the deployment and its folder in `deployment/deployments/<id>/`. Running the same id again continues that deployment, so after changing the contract I use a new id. My final deployment is `final-v1`.
+`--deployment-id` names the deployment and its folder in `deployment/deployments/<id>/`. Running the same id again continues that deployment, so after changing the contract I use a new id. My final deployment is `v2`.
 
 ```bash
 npx hardhat ignition deployments          # list all deployment ids

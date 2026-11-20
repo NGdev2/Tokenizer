@@ -8,7 +8,7 @@ import {Ownable2Step} from "@openzeppelin/contracts/access/Ownable2Step.sol";
 /**
  * @title AidarFteganChain42
  * @author NGdev2
- * @notice ERC-20 token for the 42 School "Tokenizer" project, deployed on Ethereum Sepolia Testnet.
+ * @notice Fixed-supply ERC-20 token, deployed on Ethereum Sepolia testnet.
  * @dev The supply is fixed: it is minted once in the constructor and no mint function
  *      exists, so no address can ever create another token. There is no onlyOwner
  *      function either - the owner role only labels the issuer, exposed through owner()

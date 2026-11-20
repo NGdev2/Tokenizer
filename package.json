@@ -1,7 +1,7 @@
 {
   "name": "tokenizer",
   "version": "1.0.0",
-  "description": "ERC-20 token AidarFteganChain42 (AFC42) for the 42 School Tokenizer project.",
+  "description": "My ERC-20 token: written with OpenZeppelin, tested with Hardhat, deployed and verified on Ethereum Sepolia.",
   "main": "hardhat.config.js",
   "scripts": {
     "test": "hardhat test"

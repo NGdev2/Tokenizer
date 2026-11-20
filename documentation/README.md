@@ -32,16 +32,16 @@ Ignition is Hardhat's deployment plugin that is responsible for deploying the co
 
 ## Deployment
 Creating and launching the contract, Ignition gets id for contract (***Ethereum Sepolia testnet*** id is 11155111), and the folder with this chain id will be created automatically in the folder `deployment/deployments/<deployment id>/`
-By default the deployment id is chain-<chain id> (so chain-11155111); with --deployment-id final-v1 the folder is deployment/deployments/final-v1/.
+By default the deployment id is chain-<chain id> (so chain-11155111); with --deployment-id v2 the folder is deployment/deployments/v2/.
 
 
-Inside we will have ***deployed_addresses.json*** that contains the contract address. Example: `0x88a1EB33b6D6b80fc6A15E534b3f37147AF06Af0` 
+Inside we will have ***deployed_addresses.json*** that contains the contract address. Example: `0x3D28630D5E38f7F3da4783A8867f12121777D9c6` 
 and by it we can get the full address of our token in Etherscan by adding the contract address to:
 `https://sepolia.etherscan.io/address/`
 
 - Network: Ethereum Sepolia testnet (chain id 11155111)
-- Contract address: `0x88a1EB33b6D6b80fc6A15E534b3f37147AF06Af0`
-- Etherscan: https://sepolia.etherscan.io/address/0x88a1EB33b6D6b80fc6A15E534b3f37147AF06Af0
+- Contract address: `0x3D28630D5E38f7F3da4783A8867f12121777D9c6`
+- Etherscan: https://sepolia.etherscan.io/address/0x3D28630D5E38f7F3da4783A8867f12121777D9c6
 
 
 ## Functions used
@@ -53,7 +53,7 @@ and by it we can get the full address of our token in Etherscan by adding the co
 ## Additional information
 - Redeploying the contract with the same name is possible. contract is identified by its **address**, not its name.
 - To deploy after changing the contract, we need to add a new deployment ID.
-```npx hardhat ignition deploy deployment/modules/AidarFteganChain42.js --network sepolia --deployment-id final-v1```
+```npx hardhat ignition deploy deployment/modules/AidarFteganChain42.js --network sepolia --deployment-id v2```
 
 "*purpose of the standard is having the minimum functionalities we can all agree so that tokens can be stored and transferred in a wallet. Any other functionality can be solved by creating further functions and implementing a Ðapp to manage them.*" - **Alex van de Sande**, in the r/ethereum discussion ["Let's talk about the coin standard"](https://www.reddit.com/r/ethereum/comments/3n8fkn/lets_talk_about_the_coin_standard).
 
@@ -88,6 +88,32 @@ A block is essentially a container holding:
 - A reference to the previous block.
 - A timestamp and other metadata.
 - Cryptographic information used by the network.
+
+## Tests
+
+`test/AidarFteganChain42.t.sol` has 17 tests written in Solidity. Before each test a fresh token is deployed, with the whole supply going to a test owner account; two more accounts (alice, bob) start with zero tokens. Each test prints what it does, so `npx hardhat test` shows a readable log.
+
+| Group | What I check |
+|---|---|
+| Basics | name, symbol, decimals, the whole supply of 4,242 goes to the owner |
+| transfer | balances change correctly; sending more than the balance or to the zero address fails |
+| approve / transferFrom | the allowance is used up correctly, can't be exceeded, and a new approve replaces the old one |
+| Return values | transfer, approve and transferFrom return `true` |
+| Events | Transfer on mint, transfer, transferFrom and burn; Approval on approve |
+| burn | balance and total supply both go down |
+| Ownership | the new owner must call acceptOwnership(); a stranger can't take ownership |
+
+Useful commands:
+```bash
+npx hardhat test                 # all tests
+npx hardhat test --grep Burn     # only tests with "Burn" in the name
+npx hardhat test --gas-stats     # gas cost of each function
+npx hardhat test --coverage      # which contract lines the tests reach
+```
+
+## Examples
+
+`examples/OpenZeppelin-ERC20.sol` is an early version of OpenZeppelin's ERC20 contract from 2018 (Solidity 0.4.24). I took it from OpenZeppelin's official sources to learn how ERC-20 looked before Solidity 0.8: every function is written out by hand, and overflow is prevented with the SafeMath library because the compiler didn't check it yet. It is almost identical to [OpenZeppelin v2.0.0-rc.1](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v2.0.0-rc.1/contracts/token/ERC20/ERC20.sol). It is not compiled or used by my token.
 
 ## Resources
 - https://docs.openzeppelin.com/contracts/5.x/erc20
